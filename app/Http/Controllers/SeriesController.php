@@ -27,14 +27,25 @@ class SeriesController extends Controller
     }
 
     public function store(Request $request){
+
+        Serie::create($request->all());
+      /*  
         $nomeSeries = $request->input('nome');
         $serie = new Serie();
         $serie->nome = $nomeSeries;
         $serie->save();
+      */
 
-        // DB::insert('INSERT INTO series (nome) VALUES (?)', [$nomeSeries]);
+        return to_route('series.index');
 
+      /*
+        Tipo de redirecionamento
         return redirect('/series');
+
+        return redicect()->route('series.index');
+
+      */
+        // DB::insert('INSERT INTO series (nome) VALUES (?)', [$nomeSeries]);
 
         /*
         if(DB::insert('INSERT INTO series (nome) VALUES (?)', [$nomeSeries])){
@@ -43,5 +54,11 @@ class SeriesController extends Controller
             return 'Deu ERRO no inserir';
         }
         */
+    }
+
+    public function destroy(Request $request){
+      Serie::destroy($request->series);
+
+      return to_route('series.index');
     }
 }

@@ -18,6 +18,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/series', [SeriesController::class, 'index']);
-Route::get('/series/criar', [SeriesController::class, 'create']);
-Route::post('/series/salvar', [SeriesController::class, 'store']);
+Route::resource('/series', SeriesController::class)
+  ->only(['index', 'create', 'store', 'destroy']);
+
+/*
+Route::controller(SeriesController::class)->group(function () {
+
+                                   // Nomeando as rotas para que seja utilizado nas view
+    Route::get('/series', 'index')->name('series.index');
+    Route::get('/series/criar', 'create')->name('series.create');
+    Route::post('/series/salvar', 'store')->name('series.store');
+
+});
+*/
+
+/*
+  Route::get('/series', [SeriesController::class, 'index']);
+  Route::get('/series/criar', [SeriesController::class, 'create']);
+  Route::post('/series/salvar', [SeriesController::class, 'store']);
+*/
