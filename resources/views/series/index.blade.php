@@ -16,13 +16,19 @@
         @foreach ($series as $valorDoIndice)
         <li class="list-group-item d-flex justify-content-between aling-items-center">
             {{ $valorDoIndice->nome }}         
-            <form action="{{ route('series.destroy', $valorDoIndice->id) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger btn-sm">
-                    X
-                </button>
-            </form>        
+            
+            <span class="d-flex">
+                <a href="{{ route('series.edit', $valorDoIndice->id) }}" class="btn btn-primary btn-sm">
+                    E
+                </a>
+                <form action="{{ route('series.destroy', $valorDoIndice->id) }}" method="post" class="ms-2">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm">
+                        X
+                    </button>
+                </form>  
+            </span>        
         </li>
         @endforeach
     <ul>

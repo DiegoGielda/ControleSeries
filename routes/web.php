@@ -19,7 +19,10 @@ Route::get('/', function () {
 });
 
 Route::resource('/series', SeriesController::class)
-  ->only(['index', 'create', 'store', 'destroy']);
+  ->except(['show']);
+
+  // DEFININDO APENAS QUE EXISTE ESTAS UTILIZANDO O EXCEPT "EXEÇÃO, ONDE NÃO TEM"
+  //->only(['index', 'create', 'store', 'destroy', 'edit', 'update']);
 
 /*
 Route::controller(SeriesController::class)->group(function () {
