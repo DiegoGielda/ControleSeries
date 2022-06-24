@@ -35,11 +35,12 @@ class SeriesController extends Controller
 
     public function store(Request $request){
 
-        Serie::create($request->all());
+        // create ja retorna um model do que foi criado.
+        $serie = Serie::create($request->all());
 
-        $request->session()->flash('mensagem.sucesso', 'Série adicionada com sucesso');
+        return to_route('series.index')->with('mensagem.sucesso', "Série '{$serie->nome}' adicionada com sucesso");
 
-        return to_route('series.index');
+        // $request->session()->flash('mensagem.sucesso', "Série '{$serie->nome}' adicionada com sucesso");
 
       /*  
         $nomeSeries = $request->input('nome');
@@ -66,12 +67,15 @@ class SeriesController extends Controller
         */
     }
 
-    public function destroy(Request $request){
-      Serie::destroy($request->series);
+    // O NOME QUE ESTA SENDO PASSADO NO PARAMETRO DA URL IDENTICO OU PARAMENTO NO MÉTODO
+    public function destroy(Serie $series, Request $request){
+      
+      $series->delete();
 
-      $request->session()->flash('mensagem.sucesso', 'Série removida com sucesso');
-
-      return to_route('series.index');
+      return to_route('series.index')->with('mensagem.sucesso', "Série '{$series->nome}' removida com sucesso.");
+      
+      // REALIZADO A FLASH MESSAGE DIRETAMENTE NO ROUTE COM O MÉTODO WITH
+      // $request->session()->flash('mensagem.sucesso', "Série '{$series->nome}' removida com sucesso.");
 
       // COLOCANDO NA SESSÃO UMA MENSAGEM SE REMOVIDO COM SUCESSO -- TROCADO POR FLASH
       // $request->session()->put('mensagem.sucesso', 'Série removida com sucesso');
