@@ -8,16 +8,23 @@ use App\Models\Serie;
 
 class SeriesController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         
         $series = Serie::query()->orderby('nome')->get();
-        
+
+        $mensagemSucesso = $request->session()->get('mensagem.sucesso');
+
+        return view('series.index')->with('series', $series)->with('mensagemSucesso', $mensagemSucesso);
+
+        // UTILIZADO PARA ESQUECER O RETORNO DO "PUT" UTILIZANDO O FLASH
+        //$request->session()->forget('mensagem.sucesso');
+
+        // BUSCANDO O NOME DAS SERIES
         //$series = DB::select('SELECT nome FROM series;');
 
-        return view('series.index')->with('series', $series);
-
+        // FORMAS DE PASSAR A VARIAVEL PARA A VIEW QUE SERA MONTADA NO HTML
         // return view('listar-series', compact('series'));
-        
+        //
         // return view('listar-series',['series' => $series]);
 
     }
@@ -29,14 +36,17 @@ class SeriesController extends Controller
     public function store(Request $request){
 
         Serie::create($request->all());
+
+        $request->session()->flash('mensagem.sucesso', 'Série adicionada com sucesso');
+
+        return to_route('series.index');
+
       /*  
         $nomeSeries = $request->input('nome');
         $serie = new Serie();
         $serie->nome = $nomeSeries;
         $serie->save();
       */
-
-        return to_route('series.index');
 
       /*
         Tipo de redirecionamento
@@ -59,6 +69,12 @@ class SeriesController extends Controller
     public function destroy(Request $request){
       Serie::destroy($request->series);
 
+      $request->session()->flash('mensagem.sucesso', 'Série removida com sucesso');
+
       return to_route('series.index');
+
+      // COLOCANDO NA SESSÃO UMA MENSAGEM SE REMOVIDO COM SUCESSO -- TROCADO POR FLASH
+      // $request->session()->put('mensagem.sucesso', 'Série removida com sucesso');
+
     }
 }

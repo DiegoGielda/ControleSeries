@@ -4,8 +4,14 @@
 
          Modificando para quando alterar a rota não precisar alterar a view
     -->
-        <a href="{{ route('series.create') }}" class="btn btn-dark mb-2">Adicionar</a>
+    <a href="{{ route('series.create') }}" class="btn btn-dark mb-2">Adicionar</a>
         
+    @isset($mensagemSucesso)
+    <div class="alert alert-success">
+        {{ $mensagemSucesso }}
+    </div>
+    @endisset
+
     <ul class="list-group"> 
         @foreach ($series as $valorDoIndice)
         <li class="list-group-item d-flex justify-content-between aling-items-center">
